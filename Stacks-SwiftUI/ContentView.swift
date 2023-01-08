@@ -59,12 +59,12 @@ struct PricingView: View {
     var bgColor : Color
     var body: some View {
         VStack {
-            // One way to check optionals in SwiftUI
-            if Icon != nil { // to check if optional has non nil value or not
-                Image(systemName: Icon!)
-                    .font(.largeTitle)
-                    .foregroundColor(TextColor)
-            }
+            //More elegant way to handle optionals
+            Icon.map({
+                Image(systemName: $0)
+                .font(.largeTitle)
+                .foregroundColor(TextColor)
+            })
             Text(title)
                 .font(.system(.title, design: .rounded))
                 .fontWeight(.black)
