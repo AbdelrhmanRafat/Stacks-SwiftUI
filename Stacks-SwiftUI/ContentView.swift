@@ -16,17 +16,15 @@ struct ContentView: View {
                     //Using Z-Stack.
                     ZStack {
                     PricingView(title: "Pro", Price: "$19", TextColor: .black, bgColor: Color(red: 240/255, green: 240/255, blue: 240/255))
-                        Text("Best for Designers")
-                            .font(.system(.caption, design: .rounded))
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(5)// Padding comes before background color
-                            .background(Color(red: 255/255, green: 183/255, blue: 37/255))
-                            .offset(x: 0, y: 87) // To Adjust Position of Text.
-                        //Positive Value to move down and negative value to move up
+                        MarkText(title: "Best for Designers", y_offset: 87)
                     }
                 }
                 .padding(.horizontal, 20)
+                ZStack{
+                PricingView(title: "Team",Icon: "wand.and.rays", Price: "$299", TextColor: .white, bgColor: Color(red: 62/255, green: 63/255, blue: 70/255))
+                    .padding(.horizontal)
+                    MarkText(title: "Perfect for teams with 20 members", y_offset: 107)
+                }
         }
     }
 }
@@ -55,11 +53,18 @@ struct HeaderView: View {
 //Extract Subview with arguments.
 struct PricingView: View {
     var title : String
+    var Icon : String? //Defining an optional value
     var Price : String
     var TextColor : Color
     var bgColor : Color
     var body: some View {
         VStack {
+            // One way to check optionals in SwiftUI
+            if Icon != nil { // to check if optional has non nil value or not
+                Image(systemName: Icon!)
+                    .font(.largeTitle)
+                    .foregroundColor(TextColor)
+            }
             Text(title)
                 .font(.system(.title, design: .rounded))
                 .fontWeight(.black)
@@ -74,5 +79,21 @@ struct PricingView: View {
         .padding(40) // Padding Must Get first..
         .background(bgColor)
         .cornerRadius(10)
+    }
+}
+
+struct MarkText: View {
+    var title : String
+    var y_offset : CGFloat
+    var body: some View {
+        Text(title)
+            .font(.system(.caption, design: .rounded))
+            .fontWeight(.bold)
+            .foregroundColor(.white)
+            .padding(5)// Padding comes before background color
+            .background(Color(red: 255/255, green: 183/255, blue: 37/255))
+            .offset(x: 0, y: y_offset)
+        // To Adjust Position of Text.
+       //Positive Value to move down and negative value to move up
     }
 }
