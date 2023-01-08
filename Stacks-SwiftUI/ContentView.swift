@@ -25,6 +25,7 @@ struct ContentView: View {
                     .padding(.horizontal)
                     MarkText(title: "Perfect for teams with 20 members", y_offset: 107)
                 }
+                Spacer() // Adding Spacer to bottom.
         }
     }
 }
@@ -38,15 +39,20 @@ struct ContentView_Previews: PreviewProvider {
 // Extarct SubView
 struct HeaderView: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 2)
-        {
-            Text("Choose")
-                .font(.system(.largeTitle, design: .rounded))
-                .fontWeight(.black)
-            Text("Your Plan")
-                .font(.system(.largeTitle, design: .rounded))
-                .fontWeight(.black)
+        HStack {
+            VStack(alignment: .leading, spacing: 2)
+            {
+                Text("Choose")
+                    .font(.system(.largeTitle, design: .rounded))
+                    .fontWeight(.black)
+                Text("Your Plan")
+                    .font(.system(.largeTitle, design: .rounded))
+                    .fontWeight(.black)
+            }
+            Spacer() // As SwiftUI doesn't have autolayouts
+            //A flexiable space that expands along the major axis of it's containing stack layout or on both axes if not contained in a stack.
         }
+        .padding(.horizontal,40)
     }
 }
 //--------------------------------------------
