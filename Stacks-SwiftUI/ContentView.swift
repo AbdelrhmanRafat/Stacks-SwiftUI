@@ -9,24 +9,15 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-            VStack{
-                HeaderView() // Code in Content View now is being much cleaner and easier to read.
-                HStack(spacing :15) { //Embed VStack in HStack
-                    PricingView(title: "Basic", Price: "$9", TextColor: .white, bgColor: .purple)
-                    //Using Z-Stack.
-                    ZStack {
-                    PricingView(title: "Pro", Price: "$19", TextColor: .black, bgColor: Color(red: 240/255, green: 240/255, blue: 240/255))
-                        MarkText(title: "Best for Designers", y_offset: 87)
-                    }
-                }
-                .padding(.horizontal, 20)
-                ZStack{
-                PricingView(title: "Team",Icon: "wand.and.rays", Price: "$299", TextColor: .white, bgColor: Color(red: 62/255, green: 63/255, blue: 70/255))
-                    .padding(.horizontal)
-                    MarkText(title: "Perfect for teams with 20 members", y_offset: 107)
-                }
-                Spacer() // Adding Spacer to bottom.
+        VStack {
+            PlansView(Icon: "burst.fill", title: "Basic", bgColor: Color.purple, height: 130)
+            PlansView(Icon: "dial", title: "Pro", bgColor: Color(red: 255/255, green: 183/255, blue: 37/255), height: 130)
+                .offset(x: 0, y: -24.0)
+            PlansView(Icon: "wand.and.rays", title: "Team",Price: "$299", bgColor: Color(red: 62/255, green: 63/255, blue: 70/255), height: 320,duration: "per month")
+                .offset(x: 0, y: -53.0)
+            Spacer()
         }
+        .padding()
     }
 }
 
@@ -35,71 +26,37 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-//----------------------------------------
-// Extarct SubView
-struct HeaderView: View {
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 2)
-            {
-                Text("Choose")
-                    .font(.system(.largeTitle, design: .rounded))
-                    .fontWeight(.black)
-                Text("Your Plan")
-                    .font(.system(.largeTitle, design: .rounded))
-                    .fontWeight(.black)
-            }
-            Spacer() // As SwiftUI doesn't have autolayouts
-            //A flexiable space that expands along the major axis of it's containing stack layout or on both axes if not contained in a stack.
-        }
-        .padding(.horizontal,40)
-    }
-}
-//--------------------------------------------
-//Extract Subview with arguments.
-struct PricingView: View {
+
+struct PlansView: View {
+    var Icon : String?
     var title : String
-    var Icon : String? //Defining an optional value
-    var Price : String
-    var TextColor : Color
+    var Price : String?
     var bgColor : Color
+    var height : CGFloat
+    var duration : String?
     var body: some View {
-        VStack {
-            //More elegant way to handle optionals
+        VStack(alignment: .center, spacing: 3){
             Icon.map({
                 Image(systemName: $0)
-                .font(.largeTitle)
-                .foregroundColor(TextColor)
+                    .font(.largeTitle)
+                    .padding(.top,10)
+            })
+            Price.map({
+                Text($0)
+                    .font(.largeTitle)
             })
             Text(title)
-                .font(.system(.title, design: .rounded))
+                .font(.title)
                 .fontWeight(.black)
-            Text(Price)
-                .font(.system(size: 40, weight: .heavy, design: .rounded))
-            Text("per month")
-                .font(.headline)
+            duration.map({
+                Text($0)
+                    .font(.system(size: 20, weight: .light, design: .rounded))
+            })
+            Spacer()
         }
-        .foregroundColor(TextColor)
-        //Using Frame in order to make Vstack width indpendent on Text Length..
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)// adjust max width to infinty instead of fixed number means the view will adjust itself to fill maximum width..
-        .padding(40) // Padding Must Get first..
+        .foregroundColor(.white)
+        .frame(minWidth: 0, maxWidth: .infinity,maxHeight: height, alignment: .center)
         .background(bgColor)
-        .cornerRadius(10)
-    }
-}
-
-struct MarkText: View {
-    var title : String
-    var y_offset : CGFloat
-    var body: some View {
-        Text(title)
-            .font(.system(.caption, design: .rounded))
-            .fontWeight(.bold)
-            .foregroundColor(.white)
-            .padding(5)// Padding comes before background color
-            .background(Color(red: 255/255, green: 183/255, blue: 37/255))
-            .offset(x: 0, y: y_offset)
-        // To Adjust Position of Text.
-       //Positive Value to move down and negative value to move up
+        .cornerRadius(16)
     }
 }
