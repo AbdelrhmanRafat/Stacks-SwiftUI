@@ -9,15 +9,18 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            PlansView(Icon: "burst.fill", title: "Basic", bgColor: Color.purple, height: 130)
-            PlansView(Icon: "dial", title: "Pro", bgColor: Color(red: 255/255, green: 183/255, blue: 37/255), height: 130)
-                .offset(x: 0, y: -24.0)
-            PlansView(Icon: "wand.and.rays", title: "Team",Price: "$299", bgColor: Color(red: 62/255, green: 63/255, blue: 70/255), height: 320,duration: "per month")
-                .offset(x: 0, y: -53.0)
-            Spacer()
+        VStack{
+        ZStack {
+            PlansView(Icon: "burst.fill", title: "Basic", bgColor: Color.purple)
+            PlansView(Icon: "dial", title: "Pro", bgColor: Color(red: 255/255, green: 183/255, blue: 37/255))
+                .offset(x: 0, y: 100.0)
+            PlansView(Icon: "wand.and.rays", title: "Team",Price: "$299", bgColor: Color(red: 62/255, green: 63/255, blue: 70/255),duration: "per month")
+                .offset(x: 0, y: 200.0)
         }
-        .padding()
+        .padding(.horizontal,13)
+        Spacer()
+        }
+        
     }
 }
 
@@ -32,7 +35,6 @@ struct PlansView: View {
     var title : String
     var Price : String?
     var bgColor : Color
-    var height : CGFloat
     var duration : String?
     var body: some View {
         VStack(alignment: .center, spacing: 3){
@@ -55,7 +57,7 @@ struct PlansView: View {
             Spacer()
         }
         .foregroundColor(.white)
-        .frame(minWidth: 0, maxWidth: .infinity,maxHeight: height, alignment: .center)
+        .frame(minWidth: 0, maxWidth: .infinity,maxHeight: 300.0, alignment: .center)
         .background(bgColor)
         .cornerRadius(16)
     }
